@@ -27,7 +27,6 @@ var calledArgs = null;
                         $(this).find('input[type=text]').val('').focus();
                         return false;
                     }
-                 
                     captchaXE.compare(); return false;
                 });
              
@@ -41,16 +40,16 @@ var calledArgs = null;
                 params['captcha_value'] = $('#captcha_value').val();
                 
                 window.oldExecXml(calledArgs.module,calledArgs.act,params, function(response) {
-					var isEqual = parseInt(response.result)
-					console.log(response.result);
+                    var isEqual = parseInt(response.result)
                     if (isEqual) {
 						$("#captcha_layer").hide();
 						window.oldExecXml(calledArgs.module, calledArgs.act, calledArgs.params, calledArgs.callback_func, calledArgs.response_tags, calledArgs.callback_func_arg, calledArgs.fo_obj);
 					} else {
-						$('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));
+                        $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));
+                        $('#captcah_alert').html(response.message).show().fadeOut(2000);
 						$('#captcha_value').select();
 					}
-                }, new Array('result'));
+                }, new Array('result', 'message'));
           
             },
 
@@ -68,9 +67,8 @@ var calledArgs = null;
                         window.oldExecXml(module, act, params, captchaXE.show, new Array('view', 'key'));
 
                     } else {
-                        captchaXE.show('test');
+                        captchaXE.show();
                     }
-
                    
                 } else {
                     window.oldExecXml(module, act, params, callback_func, response_tags, callback_func_arg, fo_obj);

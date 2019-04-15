@@ -82,7 +82,15 @@
                         
                         if($type == 'image')
                         {   
-                            if(!$this->compareCaptcha())
+                            $rst = $this->compareCaptcha();
+                            
+                            if(is_array($rst)) {
+                                $isEqual = $rst['result'];
+                            } else {
+                                $isEqual = $rst;
+                            }
+
+                            if($isEqual)
                             {
                                 Context::loadLang(_XE_PATH_ . 'addons/naver_openapi_captcha/lang');
                                 $_SESSION['XE_VALIDATOR_ERROR'] = -1;
@@ -166,21 +174,41 @@
             function before_module_init_captchaCompare()
             {                        
 
-                if(!$this->compareCaptcha($_SESSION['captcha_keyword'], Context:: get('captcha_value')))
-                {
-                    print("<response>\r\n<error>0</error>\r\n<result>0</result>\r\n<message></message>\r\n</response>");
-                    Context::close();
-                    exit();
-                } 
-               
-                print("<response>\r\n<error>0</error>\r\n<result>1</result>\r\n<message>success</message>\r\n</response>");
-    
+                $rst = $this->compareCaptcha($_SESSION['captcha_keyword'], Context:: get('captcha_value'));
+                
+                if (is_array($rst)) {
+
+                    if ($rst['errorCode']) {
+                        $err = $rst['errorCode'];
+                        $message = $rst['errorMessage'];
+                        $result = false;
+                    } else {
+                        $err = 0;
+                        if ($rst['result']) {
+                            $message = 'success';
+                        } else {
+                            $message = Context::getLang('captcha_denied');
+                        }
+                        
+                        $result = $rst['result'];
+                        
+                    }
+
+                    printf(file_get_contents($this->addon_path . '/tpl/response.xml'), $err, $message, $result);
+                   
+				 
+
+                } else {
+                    if ($rst) {
+                        printf(file_get_contents($this->addon_path . '/tpl/response.xml'), 0, 'success', true);
+                    } else {
+                        printf(file_get_contents($this->addon_path . '/tpl/response.xml'), 1, 'Server Error', false);
+                    }
+                }
+                   
                 Context::close();
                 exit();
             }
-
-           
-
 
             function curlInit($url) {
                 $ch = curl_init();
@@ -236,7 +264,8 @@
 
             function compareCaptcha() {     
                 $key = $_SESSION['captcha_keyword'];
-                $value = Context:: get('captcha_value');       
+                $value = Context:: get('captcha_value');
+
                 if(!in_array(Context::get('act'), $this->target_acts)) return true;
 
                 if($_SESSION[self::CAPTCHA_AUTHED])
@@ -258,21 +287,19 @@
                     if ($result)
                     {
                         $_SESSION[self::CAPTCHA_AUTHED] = true;
-                        return true; 
+                    } else {
+                        unset($_SESSION[self::CAPTCHA_AUTHED]);
                     }
                     
-                    unset($_SESSION[self::CAPTCHA_AUTHED]);
-                    return false;
                     
                 } else {
                     $errResponse = json_decode($response, true);                                 
                     if ($errResponse['errorCode'] == 'CT001' || $errResponse['errorCode'] == 'CT002' ) {
                         $this->getCaptchaKey();
-                        return false;
                     }
-
-                    echo "Error 내용:".$response;
                 }
+
+                return json_decode($response, true);
             }
         }
 

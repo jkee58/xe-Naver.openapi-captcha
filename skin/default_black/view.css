@@ -58,6 +58,21 @@
     width: 100% !important;
 }
 
+.naver_captcha-frame .alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.naver_captcha-frame .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+
 .naver_captcha-frame img {
     vertical-align: middle;
     border-style: none;
