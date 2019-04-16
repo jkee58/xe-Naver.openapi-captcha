@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon version="0.2">
-    <title xml:lang="ko">NAVER Image Captcha 애드온</title>
+    <title xml:lang="ko">NAVER OpenAPI Captcha 애드온</title>
     <description xml:lang="ko">
 	 	<![CDATA[
         프로그램 글 등록기를 막기 위해 게시판/ issueTracker에서 글/ 댓글을 입력하려 할 때 알파벳을 입력해야 글/댓글이 입력되는 애드온 입니다.
