@@ -149,7 +149,7 @@
                     $message = 'success';
                 }
 
-                printf(file_get_contents($this->addon_path . '/tpl/response.view.xml'), $err, $message, $this->loadHtml(), $_SESSION['captcha_keyword']);
+                printf(file_get_contents($this->addon_path . '/tpl/response.view.xml'), $err, $message, $this->loadHtml(), $_SESSION['captcha_keyword'], $_SESSION[self::CAPTCHA_AUTHED]);
 
                 Context::close();               
                 exit();
@@ -193,11 +193,8 @@
                         $result = $rst['result'];
                         
                     }
-
                     printf(file_get_contents($this->addon_path . '/tpl/response.xml'), $err, $message, $result);
-                   
-				 
-
+                
                 } else {
                     if ($rst) {
                         printf(file_get_contents($this->addon_path . '/tpl/response.xml'), 0, 'success', true);
@@ -231,7 +228,12 @@
 
                 if($status_code == 200) {
                     $_SESSION['captcha_keyword'] = json_decode($response, true)['key'];
-                } 
+                } else {
+                    if($status_code == 429) {   
+                        // OpenApi 한도 초과시 무조건 인증 성공
+                        $_SESSION[self::CAPTCHA_AUTHED] = true;
+                    }
+                }
 
                 return  json_decode($response, true);
             }
@@ -290,7 +292,6 @@
                     } else {
                         unset($_SESSION[self::CAPTCHA_AUTHED]);
                     }
-                    
                     
                 } else {
                     $errResponse = json_decode($response, true);                                 

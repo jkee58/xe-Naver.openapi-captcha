@@ -6,6 +6,11 @@ var calledArgs = null;
             html : null,
 
             show :  function(ret_obj) {
+                if (ret_obj.authed) {
+                    window.oldExecXml(calledArgs.module, calledArgs.act, calledArgs.params, calledArgs.callback_func, calledArgs.response_tags, calledArgs.callback_func_arg, calledArgs.fo_obj);
+                    return false;
+                }
+
                 if (!captchaXE.html) {
                     captchaXE.html = $(ret_obj.view);
                     captchaXE.html.appendTo(document.body);
@@ -64,7 +69,7 @@ var calledArgs = null;
                         var params = new Array();
                         params['captcha_action'] = 'getHtml';
                         params['mid'] = current_mid;
-                        window.oldExecXml(module, act, params, captchaXE.show, new Array('view', 'key'));
+                        window.oldExecXml(module, act, params, captchaXE.show, new Array('view', 'key', 'authed'));
 
                     } else {
                         captchaXE.show();

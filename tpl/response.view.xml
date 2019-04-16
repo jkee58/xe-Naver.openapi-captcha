@@ -3,4 +3,5 @@
     <message><![CDATA[%s]]></message>
     <view><![CDATA[%s]]></view>
     <key><![CDATA[%s]]></key>
+    <authed><![CDATA[%s]]></authed>
 </response>
