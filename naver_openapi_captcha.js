@@ -6,16 +6,17 @@ var calledArgs = null;
             html : null,
 
             show :  function(ret_obj) {
-                if (ret_obj.authed) {
+                if (ret_obj && ret_obj.authed) {
                     window.oldExecXml(calledArgs.module, calledArgs.act, calledArgs.params, calledArgs.callback_func, calledArgs.response_tags, calledArgs.callback_func_arg, calledArgs.fo_obj);
                     return false;
                 }
 
-                if (!captchaXE.html) {
+                if (!captchaXE.html && ret_obj) {
                     captchaXE.html = $(ret_obj.view);
                     captchaXE.html.appendTo(document.body);
                 }
 
+                $('.naver-bl img').attr('src', request_uri + 'addons/naver_openapi_captcha/img/2-1. NAVER OpenAPI_c_hor.png');
                 $('.naver_captcha-dialog').show();
                 $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));
                 $(captchaXE.html).append('<input type="hidden" name="error_return_url" value="'+current_url+'" />');
@@ -34,8 +35,6 @@ var calledArgs = null;
                     }
                     captchaXE.compare(); return false;
                 });
-             
-                
             },
 
             compare : function(e) {
