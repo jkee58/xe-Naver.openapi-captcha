@@ -16,9 +16,11 @@ var calledArgs = null;
                     captchaXE.html.appendTo(document.body);
                     $('.naver-bl img').attr('src', request_uri + 'addons/naver_openapi_captcha/img/2-1. NAVER OpenAPI_c_hor.png');
                     $(captchaXE.html).append('<input type="hidden" name="error_return_url" value="'+current_url+'" />');
+                    
                     captchaXE.html.find('button#reload')
                     .click(function(){					
-                        $("#captcha_image").attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));												
+                        $("#captcha_image").attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));	
+                        $(this).find(".xi-refresh").addClass('xi-spin');											
                     });
 
                     $('#captcha_layer form')
@@ -30,14 +32,11 @@ var calledArgs = null;
                         }
                         captchaXE.compare(); return false;
                     });
-                    
-                    console.log('test');
                 } 
 
                 $('.naver_captcha-dialog').show();
                 $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime())); 
-
-              
+                $('#captcha_layer form').find('input[type=text]').focus();
             },
 
             compare : function(e) {
@@ -53,6 +52,7 @@ var calledArgs = null;
 						window.oldExecXml(calledArgs.module, calledArgs.act, calledArgs.params, calledArgs.callback_func, calledArgs.response_tags, calledArgs.callback_func_arg, calledArgs.fo_obj);
 					} else {
                         $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));
+                        $('button .xi-refresh').addClass('xi-spin');
                         $('#captcah_alert').html(response.message).show().fadeOut(2000);
 						$('#captcha_value').select();
 					}

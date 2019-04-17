@@ -12,7 +12,7 @@
             
             <div class="card-body">
                 <div id="captcah_alert" class="alert alert-danger" style="display: none;"></div>
-                <img class="img-thumbnail w-100" src="about" id="captcha_image" alt="CAPTCHA">
+                <img class="img-thumbnail w-100" src="about" id="captcha_image" alt="CAPTCHA" onload="$('button .xi-refresh').removeClass('xi-spin');">
                 
                 <div class="input-group d-inline-flex mt-2">
                     <input class="form-control" id="captcha_value" type="text" name="captcha_value" autocomplete="off">
