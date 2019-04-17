@@ -14,27 +14,30 @@ var calledArgs = null;
                 if (!captchaXE.html && ret_obj) {
                     captchaXE.html = $(ret_obj.view);
                     captchaXE.html.appendTo(document.body);
-                }
+                    $('.naver-bl img').attr('src', request_uri + 'addons/naver_openapi_captcha/img/2-1. NAVER OpenAPI_c_hor.png');
+                    $(captchaXE.html).append('<input type="hidden" name="error_return_url" value="'+current_url+'" />');
+                    captchaXE.html.find('button#reload')
+                    .click(function(){					
+                        $("#captcha_image").attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));												
+                    });
 
-                $('.naver-bl img').attr('src', request_uri + 'addons/naver_openapi_captcha/img/2-1. NAVER OpenAPI_c_hor.png');
+                    $('#captcha_layer form')
+                    .submit(function(e){
+                        e.preventDefault();
+                        if(!$('#captcha_value').val()){
+                            $(this).find('input[type=text]').val('').focus();
+                            return false;
+                        }
+                        captchaXE.compare(); return false;
+                    });
+                    
+                    console.log('test');
+                } 
+
                 $('.naver_captcha-dialog').show();
-                $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));
-                $(captchaXE.html).append('<input type="hidden" name="error_return_url" value="'+current_url+'" />');
-                
-                captchaXE.html.find('button#reload')
-                .click(function(){					
-                    $("#captcha_image").attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime()));												
-                });
+                $('#captcha_image').attr("src", current_url.setQuery('captcha_action','captchaImage').setQuery('rnd', (new Date).getTime())); 
 
-                $('#captcha_layer form')
-                .submit(function(e){
-                    e.preventDefault();
-                    if(!$('#captcha_value').val()){
-                        $(this).find('input[type=text]').val('').focus();
-                        return false;
-                    }
-                    captchaXE.compare(); return false;
-                });
+              
             },
 
             compare : function(e) {
