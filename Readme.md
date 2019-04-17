@@ -1,4 +1,4 @@
-#  XE-NAVER OPENAPI Captcha
+#  XE-NAVER OpenAPI Captcha
 
 > XE 에서 사용할 수 있도록 제작된 NAVER 캡차 애드온 입니다.
 
@@ -48,12 +48,27 @@ XE에 내장된 캡차를 기반으로 제작되었습니다.
 - 제휴신청은 API를 일 호출 허용량 이상으로 사업적으로 사용하기 위해 API 사용량, API 사용처, API 활용목적에 대해 검토를 받는 절차이며 API 사용처, 활용 목적에 따라 제휴승인이 거절될 수 있습니다.
 - [네이버 클라우드 플랫폼](https://www.ncloud.com/product/applicationService/captcha)에서 제휴 신청할 수 있습니다.
 
-❗️ 처리한도 이상으로 사용시 캡차 기능은 더 이상 작동하지 않습니다.
+❗️❗️ 처리한도 이상으로 사용시 캡차 기능은 작동하지 않습니다.
 
 ### Language
 
 - English
 - 한국어
+
+## Skin
+- 밝은 테마
+- 어두운 테마
+
+#### Based on Bootstrap
+기본 제공 스킨은 Bootstrap v4.2.1 을 기반으로 제작되었습니다.
+
+❗️ 클래스명 충돌에 유의하세요.
+
+### Add Skin
+- skin 폴더에 원하는 스킨 이름의 폴더를 생성합니다.
+- view.html, view.css를 생성하여 원하는 스킨을 디자인 합니다.
+- conf 폴더의 info.xml에서 skin 항목에 생성한 스킨을 추가합니다.
+- 관리자 페이지에서 해당 스킨을 선택하여 사용합니다.
 
 ## 📜 License
 
