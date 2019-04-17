@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 <div id="captcah_alert" class="alert alert-danger" style="display: none;"></div>
-                <img class="img-thumbnail w-100" src="about" id="captcha_image" alt="CAPTCHA">
+                <img class="img-thumbnail w-100" src="about" id="captcha_image" alt="CAPTCHA" onload="$('button .xi-refresh').removeClass('xi-spin');">
                 <div class="input-group d-inline-flex mt-2">
                     <input class="form-control" id="captcha_value" type="text" name="captcha_value" autocomplete="off">
                     <input type="hidden" id="captchaType" name="captchaType" value="image" />
@@ -20,7 +20,7 @@
                         <button type="button" id="reload" class="btn btn-primary"><i class="xi-refresh"></i></button>                     
                     </div>
                 </div>
-                <div class="naver-bl">
+                <div class="naver-bl mt-2">
                     <a href="http://developers.naver.com" target="_blank">
                         <img src="about:blank" alt="NAVER 오픈 API" />
                     </a>
