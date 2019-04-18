@@ -1,0 +1,5 @@
+<response>
+    <error><![CDATA[%s]]></error>
+    <message><![CDATA[%s]]></message>
+    <result><![CDATA[%s]]></result>
+</response>
